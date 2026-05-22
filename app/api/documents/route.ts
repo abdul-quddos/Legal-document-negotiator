@@ -16,11 +16,9 @@ export async function GET() {
       return NextResponse.json([]);
     }
     
-    // Directly return the values (they are already objects)
     const documents = Object.values(docs);
     return NextResponse.json(documents);
   } catch (error) {
-    console.error('Error fetching documents:', error);
     return NextResponse.json([]);
   }
 }

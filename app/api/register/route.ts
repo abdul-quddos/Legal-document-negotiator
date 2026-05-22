@@ -16,22 +16,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
     }
 
-    // Check if email already exists
     const existingEmail = await redis.get(`user:email:${email}`);
     if (existingEmail) {
       return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
     }
 
-    // Check if username already exists
     const existingUsername = await redis.get(`user:username:${username}`);
     if (existingUsername) {
       return NextResponse.json({ error: 'Username already taken' }, { status: 400 });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Store user by email
     const userData = {
       username,
       email,

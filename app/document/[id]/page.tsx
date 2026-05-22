@@ -19,7 +19,6 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
   const [reviewedClausesCount, setReviewedClausesCount] = useState(0);
   const [accumulatedChanges, setAccumulatedChanges] = useState<Map<string, string>>(new Map());
   
-  // Persisted states for buttons
   const [appliedClauses, setAppliedClauses] = useState<Set<string>>(new Set());
   const [reviewedClauses, setReviewedClauses] = useState<Set<string>>(new Set());
 
@@ -54,7 +53,6 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
     loadDoc();
   }, [docId]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const dropdown = document.getElementById('export-dropdown');
@@ -109,7 +107,6 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
   };
 
   const handleApplySuggestion = async (clauseId: string, suggestedChange: string, originalText: string) => {
-    // Mark as applied immediately
     setAppliedClauses(prev => new Set(prev).add(clauseId));
     
     try {
@@ -141,12 +138,11 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
       }
       
       setDocData({ ...docData, editedText: modifiedDocument });
-      showToast(`✅ Clause ${clauseId} rewritten and applied`);
+      showToast(` Clause ${clauseId} rewritten and applied`);
       
     } catch (error) {
       console.error("Apply suggestion failed:", error);
-      showToast(`❌ Failed to apply clause ${clauseId}`, true);
-      // Remove applied mark on error
+      showToast(` Failed to apply clause ${clauseId}`, true);
       setAppliedClauses(prev => {
         const newSet = new Set(prev);
         newSet.delete(clauseId);
@@ -182,7 +178,7 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
       setActiveTab("edited");
       setUserRequest("");
       setAccumulatedChanges(new Map());
-      showToast(`✅ AI changes applied! Check the "Edited" tab.`);
+      showToast(` AI changes applied! Check the "Edited" tab.`);
       
     } catch (error) {
       console.error("Edit failed:", error);

@@ -3,10 +3,8 @@ import { redis } from '@/lib/redis';
 
 export async function GET() {
   try {
-    // Get all keys
     const keys = await redis.keys('*');
     
-    // Delete all keys
     for (const key of keys) {
       await redis.del(key);
     }

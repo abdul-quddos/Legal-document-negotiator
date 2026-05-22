@@ -40,7 +40,6 @@ export async function DELETE(
     const { id } = await params;
     const userEmail = session.user.email.replace(/[^a-zA-Z0-9]/g, '_');
     
-    // Delete the document
     await redis.hdel(`user:${userEmail}:documents`, id);
     
     return NextResponse.json({ success: true, message: 'Document deleted' });
